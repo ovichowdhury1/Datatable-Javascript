@@ -5,11 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="">
   <style>
       thead input {
         width: 100%;
     }
+  tr:nth-child(even) {
+  background-color: black;
+}
+tr:nth-child(odd) {
+  background-color: #dddddd;
+}
+table tbody tr:nth-child(even){
+	background-color: black !important;
+}
+
   </style>
 </head>
 <body>
@@ -24,7 +34,7 @@
                 <th>Salary</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody >
             <tr>
                 <td>Tiger Nixon</td>
                 <td>System Architect</td>
@@ -74,7 +84,7 @@
                 <td>$372,000</td>
             </tr>
         </tbody>
-        <tfoot>
+        <!-- <tfoot>
             <tr>
                 <th>Name</th>
                 <th>Position</th>
@@ -83,7 +93,7 @@
                 <th>Start date</th>
                 <th>Salary</th>
             </tr>
-        </tfoot>
+        </tfoot> -->
     </table>
    <script>
     document.addEventListener("DOMContentLoaded", function() {
