@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+  <style>
+      thead input {
+        width: 100%;
+    }
+  </style>
+</head>
+<body>
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011-04-25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Garrett Winters</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>63</td>
+                <td>2011-07-25</td>
+                <td>$170,750</td>
+            </tr>
+            <tr>
+                <td>Ashton Cox</td>
+                <td>Junior Technical Author</td>
+                <td>San Francisco</td>
+                <td>66</td>
+                <td>2009-01-12</td>
+                <td>$86,000</td>
+            </tr>
+            <tr>
+                <td>Cedric Kelly</td>
+                <td>Senior Javascript Developer</td>
+                <td>Edinburgh</td>
+                <td>22</td>
+                <td>2012-03-29</td>
+                <td>$433,060</td>
+            </tr>
+            <tr>
+                <td>Airi Satou</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>33</td>
+                <td>2008-11-28</td>
+                <td>$162,700</td>
+            </tr>
+            <tr>
+                <td>Brielle Williamson</td>
+                <td>Integration Specialist</td>
+                <td>New York</td>
+                <td>61</td>
+                <td>2012-12-02</td>
+                <td>$372,000</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+    </table>
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+  // Add a text input to each header cell for columns with indices 0, 2, and 3
+  var table = document.querySelector("#example");
+  var headerRow = table.querySelector("thead tr");
+  var filterRow = headerRow.cloneNode(true);
+  filterRow.classList.add("filters");
+  headerRow.after(filterRow);
+
+  var dataTable = new DataTable("#example", {
+    orderCellsTop: true,
+    fixedHeader: true,
+    initComplete: function() {
+      var api = this.api();
+
+      // For each column with indices 0, 2, and 3
+      api.columns([0, 2, 3]).eq(0).each(function(colIdx) {
+        // Set the header cell to contain the input element
+        var cell = filterRow.querySelectorAll("th")[colIdx];
+        var title = cell.textContent;
+        cell.innerHTML = '<input type="text" placeholder="' + title + '" />';
+
+        // On every keypress in this input
+        var input = cell.querySelector("input");
+        input.addEventListener("change", function(e) {
+          // Get the search value
+          var value = this.value;
+          this.setAttribute("title", value);
+          var regexr = "({search})";
+          var searchValue = value != "" ? regexr.replace("{search}", "(((" + value + ")))") : "";
+
+          // Search the column for that value
+          api.column(colIdx).search(searchValue, true, false).draw();
+        });
+
+        input.addEventListener("keyup", function(e) {
+          e.stopPropagation();
+          input.dispatchEvent(new Event("change"));
+          input.setSelectionRange(cursorPosition, cursorPosition);
+        });
+      });
+      
+      // Hide the header cells for columns other than 0, 2, and 3
+      var headerCells = filterRow.querySelectorAll("th");
+      for (var i = 0; i < headerCells.length; i++) {
+        if (![0, 2, 3].includes(i)) {
+          headerCells[i].innerHTML = "<th></th>";
+        }
+      }
+    }
+  });
+});
+
+   </script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
+</body>
+</html>
